@@ -26,8 +26,4 @@ def setup_logger(name, level=logging.DEBUG):
     return logger
 
 
-# logger = setup_logger()
-
-# Example usage
-# logger.info("This is an info message from the weather API")
-# logger.error("This is an error message from the weather API")
+logger = setup_logger(name="weather.log")

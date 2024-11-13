@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: checkout repository content
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: set up python
               uses: actions/setup-python@v3
               with:
@@ -28,7 +28,7 @@ jobs:
                 git diff-index --quiet HEAD || (git commit -a -m "updated logs and data" --allow-empty)
 
             - name: push changes
-              uses: github-actions-x/commit@v3
+              uses: actions-js/push@master
               with:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
                 branch: main

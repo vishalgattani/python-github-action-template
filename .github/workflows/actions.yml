@@ -20,12 +20,12 @@ jobs:
             - name: execute python script
               run: |
                 python weather.py
-            - name: commit and push files
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                git config --local user.email "action@github.com"
-                git config --local user.name "GitHub Action"
-                git add -A
-                git diff-index --quiet HEAD || (git commit -a -m "updated logs and data" --allow-empty)
-                git push origin main
+                - name: commit and push files
+                env:
+                  GITHUB_TOKEN: ${{ secrets.PAT }}
+                run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git add -A
+                  git diff-index --quiet HEAD || (git commit -a -m "updated logs and data" --allow-empty)
+                  git push origin main

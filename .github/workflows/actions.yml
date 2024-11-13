@@ -20,15 +20,10 @@ jobs:
             - name: execute python script
               run: |
                 python weather.py
-            - name: commit files
+            - name: commit and push files
               run: |
                 git config --local user.email "action@github.com"
                 git config --local user.name "GitHub Action"
                 git add -A
                 git diff-index --quiet HEAD || (git commit -a -m "updated logs and data" --allow-empty)
-
-            - name: push changes
-              uses: actions-js/push@master
-              with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                branch: main
+                git push origin main

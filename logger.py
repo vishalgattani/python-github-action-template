@@ -14,8 +14,9 @@ def setup_logger(name, level=logging.DEBUG):
             backupCount=1,
             encoding="utf8",
         )
+        file_handler.setLevel(level=level)
         console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.DEBUG)
+        console_handler.setLevel(level=level)
         formatter = logging.Formatter(
             "%(asctime)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
         )

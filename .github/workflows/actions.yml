@@ -2,7 +2,7 @@ name: Weather API
 
 on:
   schedule:
-    - cron: "0 * * * *" # every hour of the day
+    - cron: "0 0 * * *" # every midnight
 
 permissions:
   contents: write

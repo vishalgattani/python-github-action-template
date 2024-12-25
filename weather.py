@@ -15,10 +15,18 @@ class WeatherData(BaseModel):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        logger.info(f"Starting Weather API")
+        logger.debug(f"Starting Weather API")
 
-    def get_weather_data(self):
+    def get_weather_data(self,latitude: float = None, longitude: float = None):
         try:
+            if latitude is None:
+                latitude = self.latitude
+            if longitude is None:
+                longitude = self.longitude
+            assert isinstance(latitude, float), "Latitude must be a float"
+            assert isinstance(longitude, float), "Longitude must be a float"
+            assert self.latitude is not None, "Latitude must be set"
+            assert self.longitude is not None, "Longitude must be set"
             response = requests.get(
                 self.url,
                 params={
@@ -32,15 +40,20 @@ class WeatherData(BaseModel):
             return response.json()
         except Exception as e:
             logger.error(e)
+            return {}
 
-    def collect_data(self, time_sleep: int = 10, times: int = 1):
+    def collect_data(self, latitude: float = None, longitude: float = None, time_sleep: float = 0, times: int = 1):
         for _ in range(times):
-            weather_data = self.get_weather_data()
-            time_collected = weather_data["current"]["time"]
-            temperature = weather_data["current"]["temperature_2m"]
-            self.data["Time"] = time_collected
-            self.data["Temperature (celsius)"] = temperature
-            time.sleep(time_sleep)
+            try:
+                weather_data = self.get_weather_data(latitude=latitude, longitude=longitude)
+                if weather_data:
+                    time_collected = weather_data["current"]["time"]
+                    temperature = weather_data["current"]["temperature_2m"]
+                    self.data["Time"].append(time_collected)
+                    self.data["Temperature (celsius)"].append(temperature)
+                    time.sleep(time_sleep) if time_sleep > 0 else None
+            except Exception as e:
+                logger.error(e)
         return self.data
 
 if __name__ == "__main__":

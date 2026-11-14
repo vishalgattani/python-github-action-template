@@ -1,5 +1,12 @@
 {
     "latitude": 51.5,
     "longitude": -0.11,
-    "data": {}
+    "data": {
+        "Time": [
+            "2026-11-14T04:45"
+        ],
+        "Temperature (celsius)": [
+            1.1
+        ]
+    }
 }
